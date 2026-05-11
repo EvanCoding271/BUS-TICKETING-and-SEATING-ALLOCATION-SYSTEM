@@ -14,6 +14,25 @@
   --font-sans:'Inter', Helvetica, Arial, sans-serif;
 }
 
+body.light-mode {
+  --bg:#F4F7FD;
+  --surface:#FFFFFF;
+  --surface-soft:#F8FBFF;
+  --surface-muted:#E7EDF8;
+  --text:#0F172A;
+  --muted:#64748B;
+  --accent:#3D72FF;
+  --primary:#2F6FDB;
+  --border:#D6DDEA;
+  --shadow:0 30px 60px rgba(15,23,42,.08);
+}
+
+.button-secondary {
+  background:rgba(255,255,255,.1);
+  color:var(--text);
+  border-color:rgba(255,255,255,.12);
+}
+
 * {
   box-sizing:border-box;
   margin:0;
@@ -26,7 +45,7 @@ html, body {
 
 body {
   font-family:var(--font-sans);
-  background:#080B12;
+  background:var(--bg);
   color:var(--text);
   line-height:1.5;
 }

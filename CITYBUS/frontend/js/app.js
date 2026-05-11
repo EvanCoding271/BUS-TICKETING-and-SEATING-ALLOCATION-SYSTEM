@@ -35,3 +35,33 @@ export function requireAuth() {
 export function showMessage(text) {
   alert(text);
 }
+
+const themeToggleButton = document.getElementById('theme-toggle');
+const themeStorageKey = 'citybus-theme';
+
+function applyTheme(theme) {
+  const body = document.body;
+  const nextTheme = theme === 'light' ? 'light' : 'dark';
+  body.classList.toggle('light-mode', nextTheme === 'light');
+  body.dataset.theme = nextTheme;
+  if (themeToggleButton) {
+    themeToggleButton.textContent = nextTheme === 'light' ? '☀️' : '🌙';
+    themeToggleButton.setAttribute('aria-label', `Switch to ${nextTheme === 'light' ? 'dark' : 'light'} mode`);
+  }
+  localStorage.setItem(themeStorageKey, nextTheme);
+}
+
+function loadTheme() {
+  const savedTheme = localStorage.getItem(themeStorageKey);
+  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(savedTheme || (systemPrefersDark ? 'dark' : 'light'));
+}
+
+if (themeToggleButton) {
+  themeToggleButton.addEventListener('click', () => {
+    const currentTheme = document.body.dataset.theme === 'light' ? 'light' : 'dark';
+    applyTheme(currentTheme === 'light' ? 'dark' : 'light');
+  });
+}
+
+loadTheme();
