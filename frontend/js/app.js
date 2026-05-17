@@ -1,4 +1,4 @@
-const API_BASE = localStorage.getItem('api_base') || 'http://localhost:8000';
+const API_BASE = localStorage.getItem('api_base') || '/api';
 
 export async function apiFetch(path, opts = {}) {
   const token = localStorage.getItem('jwt');
