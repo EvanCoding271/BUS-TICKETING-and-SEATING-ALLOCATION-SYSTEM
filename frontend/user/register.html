@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Create Account | CityBus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../styles.css" />
+  <script defer src="../js/app.js" type="module"></script>
+</head>
+<body class="auth-page">
+  <main class="auth-shell">
+    <section class="auth-card">
+      <div class="page-top">
+        <div class="brand-panel">
+          <span class="brand-icon"></span>
+          <span class="brand-name">CityBus</span>
+        </div>
+      </div>
+      <h1>Create Account</h1>
+      <p>Sign in to your CityBus passenger account and start booking seats instantly.</p>
+      <form id="registerForm" class="auth-form">
+        <label>Full Name
+          <input name="full_name" type="text" placeholder="Juan Dela Cruz" required />
+        </label>
+        <label>Email
+          <input name="email" type="email" placeholder="juandelacruz@gmail.com" required />
+        </label>
+        <label>Phone Number
+          <input name="phone" type="tel" placeholder="09XX XXX XXXX" required />
+        </label>
+        <label>Password
+          <input name="password" type="password" placeholder="Create a strong password" required />
+        </label>
+        <div class="auth-actions">
+          <button type="submit" class="button button-primary">Sign up</button>
+        </div>
+      </form>
+      <p class="auth-note">Already have an account? <a href="login.html">Sign In</a></p>
+    </section>
+  </main>
+  <script type="module">
+    import { apiFetch } from '../js/app.js';
+    const form = document.getElementById('registerForm');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const values = Object.fromEntries(new FormData(form));
+      try {
+        await apiFetch('/auth/user/register', { method: 'POST', body: JSON.stringify(values) });
+        alert('Registration successful. Please login.');
+        window.location.href = 'login.html';
+      } catch (error) {
+        alert('Registration failed. ' + error.message);
+      }
+    });
+  </script>
+</body>
+</html>
