@@ -219,6 +219,43 @@ In the hosting dashboard, set:
 - Connect GitHub to Vercel/Render/Railway for automatic deployments.
 - Set the deployment branch to `main`.
 
+## Part 6 — Vercel Deployment
+
+### 1. Vercel project setup
+- Go to https://vercel.com and sign in.
+- Create a new project and import your GitHub repository.
+- Use the root of the repo as the project source.
+
+### 2. Configure project files
+- Confirm `vercel.json` is present in the repo root.
+- Confirm `backend/requirements.txt` exists and `backend/main.py` is the FastAPI entrypoint.
+- Confirm `frontend/index.html` is the static frontend entrypoint.
+
+### 3. Vercel environment variables
+In the Vercel dashboard, set these environment variables for production and preview:
+- `DATABASE_URL` = your PostgreSQL connection string
+- `JWT_SECRET` = a strong secret phrase
+- `JWT_ALGORITHM` = `HS256`
+- `JWT_EXP_MINUTES` = `60`
+- `CORS_ORIGINS` = `https://your-vercel-domain.vercel.app`
+
+### 4. Vercel routing behavior
+- The backend API will be available at `https://<your-project>.vercel.app/api/...`.
+- The frontend static site will be served from the same Vercel deployment.
+- The default frontend base API path is `/api`, which matches the Vercel route.
+
+### 5. Deploy and verify
+- Deploy the project from the Vercel dashboard.
+- Open the deployment URL.
+- Confirm the API docs are available at `https://<your-project>.vercel.app/api/docs`.
+- Test a simple endpoint like `/api/routes/list`.
+
+### 6. Production testing
+- Use the deployed URL in the frontend.
+- Make sure the login and booking flows work.
+- Confirm CORS errors do not appear in the browser console.
+- If needed, add the exact Vercel production URL to `CORS_ORIGINS`.
+
 ## Troubleshooting
 - If frontend cannot reach backend, check CORS settings.
 - If login fails, verify `JWT_SECRET` and `DATABASE_URL`.

@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from pydantic import BaseModel, EmailStr, constr
 
 class UserRegisterSchema(BaseModel):
@@ -10,16 +9,3 @@ class UserRegisterSchema(BaseModel):
 class UserLoginSchema(BaseModel):
     email: EmailStr
     password: constr(min_length=8)
-=======
-from pydantic import BaseModel, EmailStr, constr
-
-class UserRegisterSchema(BaseModel):
-    full_name: constr(min_length=3)
-    email: EmailStr
-    phone: constr(min_length=10, max_length=15)
-    password: constr(min_length=8)
-
-class UserLoginSchema(BaseModel):
-    email: EmailStr
-    password: constr(min_length=8)
->>>>>>> a96f8434797859db5b8f2889941570f4dc9b35d0

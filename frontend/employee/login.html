@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!doctype html>
 <html lang="en">
 <head>
@@ -59,65 +58,3 @@
   </script>
 </body>
 </html>
-=======
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>Employee Login | CityBus</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../styles.css" />
-  <script defer src="../js/app.js" type="module"></script>
-</head>
-<body class="employee-page">
-  <main class="employee-shell">
-    <section class="employee-card">
-      <div class="page-top">
-        <div class="brand-panel">
-          <span class="brand-icon"></span>
-          <span class="brand-name">CityBus</span>
-        </div>
-      </div>
-      <h1>Employee Portal</h1>
-      <p>Sign in to your CityBus employee account and access dashboards for operators, finance, and admin.</p>
-      <form id="employeeLogin" class="employee-form">
-        <label>Email
-          <input name="email" type="email" placeholder="employee@citybus.com" required />
-        </label>
-        <label>Password
-          <input name="password" type="password" placeholder="********" required />
-        </label>
-        <label>Role
-          <select name="role">
-            <option value="admin">Admin</option>
-            <option value="operator">Bus Operator</option>
-            <option value="finance">Finance</option>
-          </select>
-        </label>
-        <div class="form-actions">
-          <button type="submit" class="button button-primary">Sign in</button>
-        </div>
-      </form>
-      <p class="auth-note"><a href="../user/login.html">Passenger login</a></p>
-    </section>
-  </main>
-  <script type="module">
-    import { apiFetch, saveToken } from '../js/app.js';
-    const form = document.getElementById('employeeLogin');
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-      const body = Object.fromEntries(new FormData(form));
-      try {
-        const result = await apiFetch('/auth/employee/login', { method: 'POST', body: JSON.stringify(body) });
-        saveToken(result.access_token);
-        if (body.role === 'admin') window.location.href = 'admin-dashboard.html';
-        else if (body.role === 'finance') window.location.href = 'finance-dashboard.html';
-        else window.location.href = 'operator-dashboard.html';
-      } catch (error) {
-        alert('Login failed. ' + error.message);
-      }
-    });
-  </script>
-</body>
-</html>
->>>>>>> a96f8434797859db5b8f2889941570f4dc9b35d0
