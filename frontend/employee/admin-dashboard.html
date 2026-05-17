@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Admin Dashboard | CityBus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body class="admin-page">
+  <div class="page-shell">
+    <div class="page-top">
+      <div>
+        <p class="page-subtitle">Admin Dashboard</p>
+        <h1 class="page-title">Bus Operations Control</h1>
+      </div>
+      <div class="page-toolbar">
+        <a class="button button-primary" href="login.html">Logout</a>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <article class="stat-card">
+        <div class="card-icon">👥</div>
+        <h3>Total Users</h3>
+        <div class="stat-value">1,234</div>
+      </article>
+      <article class="stat-card">
+        <div class="card-icon">🚌</div>
+        <h3>Active Buses</h3>
+        <div class="stat-value">45</div>
+      </article>
+      <article class="stat-card">
+        <div class="card-icon">💵</div>
+        <h3>Revenue Today</h3>
+        <div class="stat-value">₱45,000</div>
+      </article>
+      <article class="stat-card">
+        <div class="card-icon">🗺️</div>
+        <h3>Total Routes</h3>
+        <div class="stat-value">10</div>
+      </article>
+    </div>
+
+    <div class="panel-grid">
+      <section class="panel">
+        <h2>Daily Bookings</h2>
+        <div class="list-card">
+          <div class="list-item"><strong>Mon</strong><span>120</span></div>
+          <div class="list-item"><strong>Tue</strong><span>150</span></div>
+          <div class="list-item"><strong>Wed</strong><span>174</span></div>
+          <div class="list-item"><strong>Thu</strong><span>160</span></div>
+          <div class="list-item"><strong>Fri</strong><span>200</span></div>
+          <div class="list-item"><strong>Sat</strong><span>95</span></div>
+          <div class="list-item"><strong>Sun</strong><span>75</span></div>
+        </div>
+      </section>
+      <section class="panel">
+        <h2>Revenue Trend</h2>
+        <div class="list-card">
+          <div class="list-item"><strong>Jan</strong><span>₱120,000</span></div>
+          <div class="list-item"><strong>Feb</strong><span>₱140,000</span></div>
+          <div class="list-item"><strong>Mar</strong><span>₱150,000</span></div>
+          <div class="list-item"><strong>Apr</strong><span>₱165,000</span></div>
+          <div class="list-item"><strong>May</strong><span>₱160,000</span></div>
+        </div>
+      </section>
+    </div>
+
+    <div class="panel-grid">
+      <section class="panel">
+        <h2>Recent Activities</h2>
+        <div class="list-card">
+          <div class="list-item"><div><strong>New User</strong><p class="small-note">Juan Dela Cruz registered</p></div><span>5 min ago</span></div>
+          <div class="list-item"><div><strong>Bus Update</strong><p class="small-note">Bus #2 maintenance completed</p></div><span>15 min ago</span></div>
+          <div class="list-item"><div><strong>Route Added</strong><p class="small-note">New route: Taguig to Manila</p></div><span>1 hour ago</span></div>
+          <div class="list-item"><div><strong>System Alert</strong><p class="small-note">Server backup completed</p></div><span>2 hours ago</span></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Quick Actions</h2>
+        <div class="form-actions" style="flex-direction:column;align-items:stretch;">
+          <a class="button button-primary" href="users.html">Manage Users</a>
+          <a class="button button-primary" href="routes.html">Manage Buses</a>
+          <a class="button button-primary" href="schedules.html">Manage Routes</a>
+          <a class="button button-secondary" href="reports.html">System Settings</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

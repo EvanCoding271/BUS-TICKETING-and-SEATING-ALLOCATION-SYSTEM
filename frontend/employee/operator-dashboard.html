@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Operator Dashboard | CityBus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body class="operator-page">
+  <div class="page-shell">
+    <div class="page-top">
+      <div>
+        <p class="page-subtitle">Bus Operator Dashboard</p>
+        <h1 class="page-title">Assigned Trips and Boarding Validation</h1>
+      </div>
+      <div class="page-toolbar">
+        <a class="button button-primary" href="login.html">Logout</a>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <article class="stat-card">
+        <div class="card-icon">🚌</div>
+        <h3>Active Routes</h3>
+        <div class="stat-value">3</div>
+      </article>
+      <article class="stat-card">
+        <div class="card-icon">👨‍✈️</div>
+        <h3>Driver Assigned</h3>
+        <div class="stat-value">Juan Cruz</div>
+      </article>
+      <article class="stat-card">
+        <div class="card-icon">✅</div>
+        <h3>Tickets Validated</h3>
+        <div class="stat-value">24</div>
+      </article>
+      <article class="stat-card">
+        <div class="card-icon">📍</div>
+        <h3>Next Departure</h3>
+        <div class="stat-value">08:00 AM</div>
+      </article>
+    </div>
+
+    <div class="panel-grid">
+      <section class="panel">
+        <h2>Assigned Trips</h2>
+        <div class="list-card">
+          <div class="list-item"><div><strong>Route 1</strong><p class="small-note">Makati → Manila</p></div><span class="tag">Active</span></div>
+          <div class="list-item"><div><strong>Route 4</strong><p class="small-note">Pasig → Ortigas</p></div><span class="tag">Active</span></div>
+          <div class="list-item"><div><strong>Route 7</strong><p class="small-note">BGC → Quezon City</p></div><span class="tag">Idle</span></div>
+        </div>
+      </section>
+      <section class="panel">
+        <h2>Boarding Validation</h2>
+        <div class="list-card">
+          <div class="list-item"><div><strong>Scan QR Ticket</strong><p class="small-note">Use the scanner for one-time boarding.</p></div><span class="button button-primary">Scan</span></div>
+          <div class="list-item"><div><strong>Passenger Verification</strong><p class="small-note">Confirm identity before boarding.</p></div><span class="button button-secondary">Verify</span></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
