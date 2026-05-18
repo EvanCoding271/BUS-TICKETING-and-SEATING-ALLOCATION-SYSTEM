@@ -46,15 +46,16 @@
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         
-      // Change this block to safely extract values using the form elements themselves
-        const form = document.getElementById('registerForm');
+        // Target the form element directly
+        const form = e.target;
+        
+        // This extracts the values using the name="" attributes directly!
         const name = form.querySelector('input[name="full_name"]').value;
         const email = form.querySelector('input[name="email"]').value;
         const phone = form.querySelector('input[name="phone"]').value;
         const password = form.querySelector('input[name="password"]').value;
 
         try {
-            // Updated to /api/... so Vercel forwards it to your FastAPI backend server
             const data = await apiFetch('/api/auth/user/register', {
                 method: 'POST',
                 body: JSON.stringify({ name, email, password, phone })
