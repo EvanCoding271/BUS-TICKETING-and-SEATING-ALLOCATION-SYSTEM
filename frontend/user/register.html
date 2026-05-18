@@ -43,28 +43,29 @@
     import { apiFetch, showMessage } from '../js/app.js';
 
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // Read form data directly by name attributes (bulletproof method)
-        const formData = new FormData(e.target);
-        const name = formData.get('full_name');
-        const email = formData.get('email');
-        const phone = formData.get('phone');
-        const password = formData.get('password');
+    e.preventDefault();
+    
+    // We are selecting elements directly via the form fields container 
+    // This removes the dependency on global IDs completely!
+    const form = e.target;
+    const name = form.querySelector('input[name="full_name"]')?.value || form.querySelector('input[type="text"]')?.value;
+    const email = form.querySelector('input[name="email"]')?.value || form.querySelector('input[type="email"]')?.value;
+    const phone = form.querySelector('input[name="phone"]')?.value || form.querySelector('input[type="tel"]')?.value;
+    const password = form.querySelector('input[name="password"]')?.value || form.querySelector('input[type="password"]')?.value;
 
-        try {
-            const data = await apiFetch('/api/auth/user/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, password, phone })
-            });
-            
-            alert('Registration successful! Redirecting to login...');
-            window.location.href = './login.html';
-        } catch (err) {
-            alert(err.message || 'Registration failed.');
-        }
-    });
+    try {
+        const data = await apiFetch('/api/auth/user/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password, phone })
+        });
+        
+        alert('Registration successful! Redirecting to login...');
+        window.location.href = './login.html';
+    } catch (err) {
+        alert(err.message || 'Registration failed.');
+    }
+});
   </script>
 </body>
 </html>
