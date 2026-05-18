@@ -46,11 +46,12 @@
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // These will now successfully find the elements above!
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const phone = document.getElementById('phone').value;
+      // Change this block to safely extract values using the form elements themselves
+        const form = document.getElementById('registerForm');
+        const name = form.querySelector('input[name="full_name"]').value;
+        const email = form.querySelector('input[name="email"]').value;
+        const phone = form.querySelector('input[name="phone"]').value;
+        const password = form.querySelector('input[name="password"]').value;
 
         try {
             // Updated to /api/... so Vercel forwards it to your FastAPI backend server
