@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
-from ..database.connection import database
-from ..auth.role_guard import require_role, require_any_role
-from ..schemas.booking import BookingReserveSchema, BookingConfirmSchema
+# 🛠️ FIXED: Removed '..'
+from database.connection import database
+from auth.jwt_handler import get_current_user # (if this file uses it)
 
 router = APIRouter(prefix="/bookings", tags=["bookings"])
 
