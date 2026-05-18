@@ -57,7 +57,8 @@
             });
             
             showMessage('Registration successful! Please login.');
-            window.location.href = './login.html';
+            //  FIX: Change it to point directly to your root-relative login path
+            window.location.href = '/user/login.html';
         } catch (err) {
             showMessage(err.message);
         }
