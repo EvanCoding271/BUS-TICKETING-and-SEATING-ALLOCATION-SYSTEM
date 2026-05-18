@@ -1,13 +1,13 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel, Field
-from ..auth.password import hash_password, verify_password
-from ..auth.jwt_handler import create_access_token
-from ..database.connection import database
+# 🛠️ FIXED: Changed from relative (..) to clean absolute paths for Vercel
+from auth.password import hash_password, verify_password
+from auth.jwt_handler import create_access_token
+from database.connection import database
 
 router = APIRouter(prefix="/auth/user", tags=["auth_user"])
 
 class RegisterSchema(BaseModel):
-    # This maps 'name' from frontend to 'full_name' for your Supabase column automatically!
     full_name: str = Field(validation_alias="name")
     email: str
     phone: str
@@ -24,8 +24,7 @@ async def register(payload: RegisterSchema):
             
         hashed = hash_password(payload.password)
         
-        # 2. 🛠️ FIXED SQL INSERT STRING: 
-        # Removed 'created_at' entirely so Supabase can safely use its built-in DEFAULT NOW() values!
+        # 2. Database Insert Configuration
         insert = """INSERT INTO users (full_name, email, phone, password_hash)
                     VALUES (:full_name, :email, :phone, :password_hash) RETURNING id"""
                     
