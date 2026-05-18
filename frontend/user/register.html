@@ -23,7 +23,7 @@
           <input id="name" name="full_name" type="text" placeholder="Juan Dela Cruz" required />
         </label>
         <label>Email
-          <input id="email" name="email" type="type" placeholder="juandelacruz@gmail.com" required />
+          <input id="email" name="email" type="email" placeholder="juandelacruz@gmail.com" required />
         </label>
         <label>Phone Number
           <input id="phone" name="phone" type="tel" placeholder="09XX XXX XXXX" required />
@@ -42,21 +42,18 @@
   <script type="module">
     import { apiFetch, showMessage } from '../js/app.js';
 
-    // This selects the form directly, even if the ID is missing or mismatched!
     const signupForm = document.querySelector('form');
 
     if (signupForm) {
         signupForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // This reads the entire form data automatically based on input 'name' fields!
             const formData = new FormData(e.target);
             const name = formData.get('full_name');
             const email = formData.get('email');
             const phone = formData.get('phone');
             const password = formData.get('password');
 
-            // Log the data locally so you can see it working in F12 Console
             console.log("Submitting registration for:", { name, email, phone });
 
             try {
