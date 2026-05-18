@@ -24,14 +24,17 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(auth_user.router)
-app.include_router(auth_employee.router)
-app.include_router(bookings.router)
-app.include_router(qr.router)
-app.include_router(routes.router)
-app.include_router(schedules.router)
-app.include_router(payments.router)
-app.include_router(finance.router)
+# Change ONLY these two lines in your backend/app.py:
+app.include_router(auth_user.router, prefix="/api", tags=["User Auth"])
+app.include_router(auth_employee.router, prefix="/api", tags=["Employee Auth"])
+
+# Keep the rest exactly the same:
+app.include_router(bookings.router, prefix="/api", tags=["Bookings"])
+app.include_router(qr.router, prefix="/api", tags=["QR"])
+app.include_router(routes.router, prefix="/api", tags=["Routes"])
+app.include_router(schedules.router, prefix="/api", tags=["Schedules"])
+app.include_router(payments.router, prefix="/api", tags=["Payments"])
+app.include_router(finance.router, prefix="/api", tags=["Finance"])
 
 @app.on_event("startup")
 async def startup():
