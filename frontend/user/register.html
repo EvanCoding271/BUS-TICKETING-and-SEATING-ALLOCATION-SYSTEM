@@ -18,18 +18,19 @@
       </div>
       <h1>Create Account</h1>
       <p>Sign in to your CityBus passenger account and start booking seats instantly.</p>
+      
       <form id="registerForm" class="auth-form">
         <label>Full Name
-          <input name="full_name" type="text" placeholder="Juan Dela Cruz" required />
+          <input id="name" name="full_name" type="text" placeholder="Juan Dela Cruz" required />
         </label>
         <label>Email
-          <input name="email" type="email" placeholder="juandelacruz@gmail.com" required />
+          <input id="email" name="email" type="type" placeholder="juandelacruz@gmail.com" required />
         </label>
         <label>Phone Number
-          <input name="phone" type="tel" placeholder="09XX XXX XXXX" required />
+          <input id="phone" name="phone" type="tel" placeholder="09XX XXX XXXX" required />
         </label>
         <label>Password
-          <input name="password" type="password" placeholder="Create a strong password" required />
+          <input id="password" name="password" type="password" placeholder="Create a strong password" required />
         </label>
         <div class="auth-actions">
           <button type="submit" class="button button-primary">Sign up</button>
@@ -38,31 +39,32 @@
       <p class="auth-note">Already have an account? <a href="login.html">Sign In</a></p>
     </section>
   </main>
+
   <script type="module">
-    import { apiFetch, showMessage } from '../js/app.js'; // Ensure path is correct
+    import { apiFetch, showMessage } from '../js/app.js';
 
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        // These will now successfully find the elements above!
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         const phone = document.getElementById('phone').value;
 
         try {
-            // FIX: Explicitly add method: 'POST' inside your options object object
-            const data = await apiFetch('/auth/user/register', {
-                method: 'POST', // <--- MAKE SURE THIS IS HERE
+            // Updated to /api/... so Vercel forwards it to your FastAPI backend server
+            const data = await apiFetch('/api/auth/user/register', {
+                method: 'POST',
                 body: JSON.stringify({ name, email, password, phone })
             });
             
             showMessage('Registration successful! Please login.');
-            //  FIX: Change it to point directly to your root-relative login path
             window.location.href = '/user/login.html';
         } catch (err) {
             showMessage(err.message);
         }
     });
-</script>
+  </script>
 </body>
 </html>
