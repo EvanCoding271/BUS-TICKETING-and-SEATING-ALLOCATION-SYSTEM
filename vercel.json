@@ -1,4 +1,4 @@
-{
+﻿{
   "version": 2,
   "builds": [
     {
@@ -6,14 +6,14 @@
       "use": "@vercel/static"
     },
     {
-      "src": "backend/app.py",
+      "src": "backend/main.py",
       "use": "@vercel/python"
     }
   ],
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "backend/app.py"
+      "dest": "backend/main.py"
     },
     {
       "src": "/$",
@@ -25,3 +25,4 @@
     }
   ]
 }
+
