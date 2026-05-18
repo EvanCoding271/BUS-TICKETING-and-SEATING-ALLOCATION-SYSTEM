@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
-from schemas.finance import FinanceReportRequest
-from auth.role_guard import require_any_role
-from database.connection import database
+from ..schemas.finance import FinanceReportRequest
+from ..auth.role_guard import require_any_role
+from ..database.connection import database
 
 router = APIRouter(prefix="/finance", tags=["finance"])
 

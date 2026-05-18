@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
-from schemas.route import RouteCreateSchema, RouteUpdateSchema
-from auth.role_guard import require_role
-from database.connection import database
+from ..schemas.route import RouteCreateSchema, RouteUpdateSchema
+from ..auth.role_guard import require_role
+from ..database.connection import database
 
 router = APIRouter(prefix="/routes", tags=["routes"])
 

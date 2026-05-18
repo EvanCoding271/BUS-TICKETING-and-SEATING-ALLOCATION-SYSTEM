@@ -1,9 +1,8 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-# 🛠️ FIXED: Removed '..'
-from auth.password import hash_password, verify_password
-from auth.jwt_handler import create_access_token
-from database.connection import database
+from ..schemas.employee import EmployeeLoginSchema
+from ..auth.password import verify_password
+from ..auth.jwt_handler import create_access_token
+from ..database.connection import database
 
 router = APIRouter(prefix="/auth/employee", tags=["auth_employee"])
 

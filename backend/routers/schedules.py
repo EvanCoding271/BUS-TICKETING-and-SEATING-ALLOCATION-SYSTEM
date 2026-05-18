@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
-from schemas.schedule import ScheduleCreateSchema, ScheduleUpdateSchema
-from auth.role_guard import require_role
-from database.connection import database
+from ..schemas.schedule import ScheduleCreateSchema, ScheduleUpdateSchema
+from ..auth.role_guard import require_role
+from ..database.connection import database
 
 router = APIRouter(prefix="/schedules", tags=["schedules"])
 

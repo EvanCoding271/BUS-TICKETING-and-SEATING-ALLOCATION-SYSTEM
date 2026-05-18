@@ -1,46 +1,34 @@
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, Field
-# 🛠️ FIXED: Changed from relative (..) to clean absolute paths for Vercel
-from auth.password import hash_password, verify_password
-from auth.jwt_handler import create_access_token
-from database.connection import database
+from pydantic import BaseModel
+from ..auth.password import hash_password, verify_password
+from ..auth.jwt_handler import create_access_token
+from ..database.connection import database
 
 router = APIRouter(prefix="/auth/user", tags=["auth_user"])
 
 class RegisterSchema(BaseModel):
-    full_name: str = Field(validation_alias="name")
+    full_name: str
     email: str
     phone: str
     password: str
 
 @router.post("/register")
 async def register(payload: RegisterSchema):
-    try:
-        # 1. Check unique email
-        query = "SELECT id FROM users WHERE email = :email"
-        row = await database.fetch_one(query, values={"email": payload.email})
-        if row:
-            raise HTTPException(400, "Email already registered")
-            
-        hashed = hash_password(payload.password)
-        
-        # 2. Database Insert Configuration
-        insert = """INSERT INTO users (full_name, email, phone, password_hash)
-                    VALUES (:full_name, :email, :phone, :password_hash) RETURNING id"""
-                    
-        user_id = await database.execute(insert, values={
-            "full_name": payload.full_name,
-            "email": payload.email,
-            "phone": payload.phone,
-            "password_hash": hashed
-        })
-        
-        return {"id": user_id}
-        
-    except HTTPException as http_exc:
-        raise http_exc
-    except Exception as db_err:
-        raise HTTPException(status_code=500, detail=f"Database Insertion Failed: {str(db_err)}")
+    # check unique email
+    query = "SELECT id FROM users WHERE email = :email"
+    row = await database.fetch_one(query, values={"email": payload.email})
+    if row:
+        raise HTTPException(400, "Email already registered")
+    hashed = hash_password(payload.password)
+    insert = """INSERT INTO users (full_name,email,phone,password_hash,created_at)
+                VALUES (:full_name,:email,:phone,:password_hash,now()) RETURNING id"""
+    user_id = await database.execute(insert, values={
+        "full_name": payload.full_name,
+        "email": payload.email,
+        "phone": payload.phone,
+        "password_hash": hashed
+    })
+    return {"id": user_id}
 
 class LoginSchema(BaseModel):
     email: str
