@@ -5,6 +5,7 @@
   <title>Create Account | CityBus</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../styles.css" />
+  <script defer src="../js/app.js" type="module"></script>
 </head>
 <body class="auth-page">
   <main class="auth-shell">
@@ -23,7 +24,7 @@
           <input id="name" name="full_name" type="text" placeholder="Juan Dela Cruz" required />
         </label>
         <label>Email
-          <input id="email" name="email" type="email" placeholder="juandelacruz@gmail.com" required />
+          <input id="email" name="email" type="type" placeholder="juandelacruz@gmail.com" required />
         </label>
         <label>Phone Number
           <input id="phone" name="phone" type="tel" placeholder="09XX XXX XXXX" required />
@@ -42,40 +43,28 @@
   <script type="module">
     import { apiFetch, showMessage } from '../js/app.js';
 
-    document.addEventListener('DOMContentLoaded', () => {
-      const signupForm = document.getElementById('registerForm');
-
-      if (!signupForm) {
-        console.error('Register form not found on this page.');
-        return;
-      }
-
-      signupForm.addEventListener('submit', async (e) => {
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-
-        const formData = new FormData(signupForm);
-        const name = formData.get('full_name')?.toString().trim() || '';
-        const email = formData.get('email')?.toString().trim() || '';
-        const phone = formData.get('phone')?.toString().trim() || '';
-        const password = formData.get('password')?.toString() || '';
-
-        if (!name || !email || !phone || !password) {
-          showMessage('Please complete all fields before signing up.');
-          return;
-        }
+        
+    // Change this block to safely extract values using the form elements themselves
+        const form = document.getElementById('registerForm');
+        const name = form.querySelector('input[name="full_name"]').value;
+        const email = form.querySelector('input[name="email"]').value;
+        const phone = form.querySelector('input[name="phone"]').value;
+        const password = form.querySelector('input[name="password"]').value;
 
         try {
-          await apiFetch('/api/auth/user/register', {
-            method: 'POST',
-            body: JSON.stringify({ full_name: name, email, password, phone })
-          });
-
-          showMessage('Registration successful! Please login.');
-          window.location.href = 'login.html';
+            // Updated to /api/... so Vercel forwards it to your FastAPI backend server
+            const data = await apiFetch('/api/auth/user/register', {
+                method: 'POST',
+                body: JSON.stringify({ name, email, password, phone })
+            });
+            
+            showMessage('Registration successful! Please login.');
+            window.location.href = '/user/login.html';
         } catch (err) {
-          showMessage(err.message || 'Registration failed. Please try again.');
+            showMessage(err.message);
         }
-      });
     });
   </script>
 </body>
