@@ -7,7 +7,7 @@ from ..database.connection import database
 router = APIRouter(prefix="/auth/user", tags=["auth_user"])
 
 class RegisterSchema(BaseModel):
-    # 🛠️ FIXED: Accepts 'name' from frontend and automatically maps it to full_name
+    # This maps 'name' from frontend to 'full_name' for your Supabase column automatically!
     full_name: str = Field(validation_alias="name")
     email: str
     phone: str
@@ -16,7 +16,7 @@ class RegisterSchema(BaseModel):
 @router.post("/register")
 async def register(payload: RegisterSchema):
     try:
-        # check unique email
+        # 1. Check unique email
         query = "SELECT id FROM users WHERE email = :email"
         row = await database.fetch_one(query, values={"email": payload.email})
         if row:
@@ -24,10 +24,10 @@ async def register(payload: RegisterSchema):
             
         hashed = hash_password(payload.password)
         
-        # ⚠️ NOTE: Double check your Supabase table schema. 
-        # If your table column is named 'name' instead of 'full_name', change the column identifier below!
-        insert = """INSERT INTO users (full_name, email, phone, password_hash, created_at)
-                    VALUES (:full_name, :email, :phone, :password_hash, now()) RETURNING id"""
+        # 2. 🛠️ FIXED SQL INSERT STRING: 
+        # Removed 'created_at' entirely so Supabase can safely use its built-in DEFAULT NOW() values!
+        insert = """INSERT INTO users (full_name, email, phone, password_hash)
+                    VALUES (:full_name, :email, :phone, :password_hash) RETURNING id"""
                     
         user_id = await database.execute(insert, values={
             "full_name": payload.full_name,
@@ -35,14 +35,13 @@ async def register(payload: RegisterSchema):
             "phone": payload.phone,
             "password_hash": hashed
         })
+        
         return {"id": user_id}
         
-    except HTTPException as e:
-        raise e
+    except HTTPException as http_exc:
+        raise http_exc
     except Exception as db_err:
-        # If the database itself fails (e.g. bad column names), this will tell you why instead of giving a blank 500 error
-        print(f"Database Runtime Error: {str(db_err)}")
-        raise HTTPException(500, detail=f"Database execution failed: {str(db_err)}")
+        raise HTTPException(status_code=500, detail=f"Database Insertion Failed: {str(db_err)}")
 
 class LoginSchema(BaseModel):
     email: str
