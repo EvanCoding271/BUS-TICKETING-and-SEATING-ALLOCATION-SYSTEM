@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from ..utils.qr_generator import generate_qr_base64
-from ..database.connection import database
+from utils.qr_generator import generate_qr_base64
+from database.connection import database
 
 router = APIRouter(prefix="/qr", tags=["qr"])
 

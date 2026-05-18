@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
-from ..schemas.payment import PaymentProcessSchema, RefundSchema
-from ..auth.role_guard import require_role, require_any_role
-from ..database.connection import database
+from schemas.payment import PaymentProcessSchema, RefundSchema
+from auth.role_guard import require_role, require_any_role
+from database.connection import database
 
 router = APIRouter(prefix="/payments", tags=["payments"])
 
