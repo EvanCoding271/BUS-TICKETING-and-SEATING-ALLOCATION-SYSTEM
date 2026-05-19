@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Passenger Login | CityBus</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../styles.css" />
+  <script defer src="../js/app.js" type="module"></script>
+</head>
+<body class="auth-page">
+  <main class="auth-shell">
+    <section class="auth-card">
+      <div class="page-top">
+        <div class="brand-panel">
+          <span class="brand-icon"></span>
+          <span class="brand-name">CityBus</span>
+        </div>
+      </div>
+      <h1>Login to CityBus</h1>
+      <p>Access your passenger portal, review bookings, and complete payments securely.</p>
+      <form id="loginForm" class="auth-form">
+        <label>Email
+          <input name="email" type="email" placeholder="juandelacruz@gmail.com" required />
+        </label>
+        <label>Password
+          <input name="password" type="password" placeholder="********" required />
+        </label>
+        <div class="form-actions">
+          <button type="submit" class="button button-primary">Login</button>
+        </div>
+      </form>
+      <p class="auth-note">New user? <a href="register.html">Sign Up</a></p>
+    </section>
+  </main>
+  <script type="module">
+    import { apiFetch, saveToken } from '../js/app.js';
+    const form = document.getElementById('loginForm');
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const data = Object.fromEntries(new FormData(form));
+      try {
+        const result = await apiFetch('/auth/user/login', { method: 'POST', body: JSON.stringify(data) });
+        saveToken(result.access_token);
+        window.location.href = 'dashboard.html';
+      } catch (error) {
+        alert('Login failed. ' + error.message);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,11 +1,10 @@
 import os
 import sys
 from pathlib import Path
-from contextlib import asynccontextmanager
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+# Ensure the repository root is on sys.path so backend imports work in Vercel's serverless execution.
 ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
@@ -13,32 +12,9 @@ if str(ROOT_DIR) not in sys.path:
 from backend.database.connection import database
 from backend.routers import auth_user, auth_employee, bookings, qr, routes, schedules, payments, finance
 
+app = FastAPI(title="CityBus Transport API", version="1.0.0", root_path="/api")
 
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    if not database.is_connected:
-        await database.connect()
-    try:
-        yield
-    finally:
-        if database.is_connected:
-            await database.disconnect()
-
-
-app = FastAPI(
-    title="CityBus Transport API",
-    version="1.0.0",
-    lifespan=lifespan
-)
-
-origins = [
-    origin.strip()
-    for origin in os.getenv(
-        "CORS_ORIGINS",
-        "http://localhost:5500,http://127.0.0.1:5500,http://localhost:8000"
-    ).split(",")
-    if origin.strip()
-]
+origins = [origin.strip() for origin in os.getenv('CORS_ORIGINS', 'http://localhost:5500,http://127.0.0.1:5500,http://localhost:8000').split(',') if origin.strip()]
 
 app.add_middleware(
     CORSMiddleware,
@@ -57,7 +33,10 @@ app.include_router(schedules.router)
 app.include_router(payments.router)
 app.include_router(finance.router)
 
+@app.on_event("startup")
+async def startup():
+    await database.connect()
 
-@app.get("/")
-async def root():
-    return {"status": "ok", "service": "CITYBUS API"}
+@app.on_event("shutdown")
+async def shutdown():
+    await database.disconnect()
