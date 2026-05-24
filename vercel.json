@@ -20,9 +20,7 @@
       "dest": "/frontend/$1"
     }
   ],
-  "functions": {
-    "backend/main.py": {
-      "maxDuration": 30
-    }
+  "env": {
+    "OPENAI_API_KEY": "@openai_api_key"
   }
 }
