@@ -57,16 +57,16 @@
             console.log("Submitting registration for:", { name, email, phone });
 
             try {
-                const data = await apiFetch('/api/auth/user/register', {
+                const data = await apiFetch('/auth/user/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ name, email, password, phone })
+                    body: JSON.stringify({ full_name: name, email, password, phone })
                 });
                 
                 showMessage('Registration successful! Please login.');
-                window.location.href = '/user/login.html';
+                window.location.href = '/frontend/user/login.html';
             } catch (err) {
                 showMessage(err.message || 'Registration failed. Please check backend.');
             }

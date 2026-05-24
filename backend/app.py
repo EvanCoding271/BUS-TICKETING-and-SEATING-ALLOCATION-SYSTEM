@@ -28,7 +28,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title="CityBus Transport API",
     version="1.0.0",
-    lifespan=lifespan
+    lifespan=lifespan,
+    root_path="/api"  # FIX: tells FastAPI it is mounted under /api on Vercel
 )
 
 origins = [
